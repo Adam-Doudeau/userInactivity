@@ -18,6 +18,10 @@ class UserInactivityCronModuleFrontController extends ModuleFrontController
         if(Tools::getValue('token') != Configuration::get('USERINACTIVITY_BOT_TOKEN')){
             Tools::redirect('pagenotfound');
         }
+        
+    }
+
+    public function display(){
         $this->module->updateInactivity();
     }
 }

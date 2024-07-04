@@ -28,6 +28,10 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
+use PrestaShop\PrestaShop\Core\MailTemplate\Layout\Layout;
+use PrestaShop\PrestaShop\Core\MailTemplate\ThemeInterface;
+
+
 require_once dirname(__FILE__).'/classes/DomadooInactivityLog.php';
 require_once dirname(__FILE__).'/classes/DomadooInactivityMail.php';
 
@@ -229,8 +233,7 @@ class UserInactivity extends Module
     }
 
     public function hookActionAuthentication($params){
-        //DomadooInactivityMail::getInactivityByIdCustomer($this->context->customer->id)
-        if(true){
+        if(DomadooInactivityMail::getInactivityByIdCustomer($this->context->customer->id)){
             Tools::redirect('https://installateurs.domadoo.fr/fr/module/userinactivity/inactivityconnection');
         }
     }
@@ -297,19 +300,23 @@ class UserInactivity extends Module
         $date_suppresion = date('Y-m-d', strtotime($date_first_mail['date_relance']. ' + 40 days'));
         Mail::Send(
             (int)(Configuration::get('PS_LANG_DEFAULT')), // defaut language id
-            'reply_msg', // email template file to be use
+            'relance', // email template file to be use
             'Compte inactif', // email subject
             array(
                 '{email}'       => Configuration::get('PS_SHOP_EMAIL'), // sender email address
                 '{firstname}'   => $customer->firstname,
                 '{lastname}'    => $customer->lastname,
-                '{reply}'       => 'Votre compte est inactif depuis plus de 2 ans, si vous ne voulez pas qu\'il soit supprimer, veuillez vous connectez avant le '.$date_suppresion, // email content
+                '{reply}'       =>  Mail::l('Your account has been inactive for more than 2 years. If you do not want it to be deleted, please log in before '.$date_suppresion, $idLang), // email content
                 '{link}'        => 'https://installateurs.domadoo.fr/fr/connexion?back=my-account',
             ),
             'adam.doudeau2@gmail.com', // receiver email address
             NULL, //receiver name
             NULL, //from email address
-            NULL  //from name
+            NULL, //from name
+            NULL,
+            NULL,
+            _PS_MODULE_DIR_.$this->name.'/mails/'
         );
     }
+
 }

@@ -1,0 +1,11 @@
+https://installateurs.domadoo.fr/fr/
+
+Hello Truc Truc,
+
+{reply}
+
+Please do not reply directly to this email, we will not receive it. In order to cancel the deletion of your account, click on the following link: {link}
+
+[Installateur Domadoo](https://installateurs.domadoo.fr/fr/)
+
+Powered by [PrestaShop](https://www.prestashop.com/?utm_source=marchandprestashop&utm_medium=e-mail&utm_campaign=footer_1-7)
